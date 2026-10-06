@@ -14,24 +14,31 @@
   "dependencies": {
     "@tailwindcss/vite": "^4",
     "@tanstack/react-devtools": "latest",
+    "@tanstack/react-query": "^5.104.1",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
+    "@tanstack/react-table": "^9.2.5",
     "@tanstack/router-plugin": "latest",
     "@workspace/ui": "workspace:*",
+    "better-auth": "^1.7.4",
     "lucide-react": "^1.23.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "react-error-boundary": "^6.1.6",
     "tailwindcss": "^4"
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "latest",
     "@tanstack/eslint-config": "latest",
+    "@tanstack/eslint-plugin-query": "^5.104.1",
+    "@tanstack/react-query-devtools": "^5.104.1",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6",
-    "eslint": "^9",
+    "eslint": "^10",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "typescript": "^6",
     "vite": "^8"
   }
