@@ -17,10 +17,8 @@ import {
 import { AlertCircle, Loader2 } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { PokemonCard } from "./pokemon-card"
-
-const CARD_HEIGHT = 240
-const GAP = 16
-const MIN_CARD_WIDTH = 180
+import { Link } from "@tanstack/react-router"
+import { CARD_HEIGHT, GAP, MIN_CARD_WIDTH } from "@/constants"
 
 function useColumns(container: HTMLElement | null) {
   const [columns, setColumns] = useState(1)
@@ -126,7 +124,13 @@ export function VirtualizedPokemonGrid() {
               }
             >
               {rowItems.map((p) => (
-                <PokemonCard key={p.id} pokemon={p} />
+                <Link
+                  key={p.id}
+                  to={`/pokemon/$pokemonId`}
+                  params={{ pokemonId: String(p.id) }}
+                >
+                  <PokemonCard key={p.id} pokemon={p} />
+                </Link>
               ))}
             </div>
           )
