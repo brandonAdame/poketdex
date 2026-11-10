@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router"
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { ThemeProvider } from "@/components/theme-provider"
 
 import appCss from "@workspace/ui/globals.css?url"
 
@@ -51,12 +52,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <HeadContent />
         </head>
         <body className="font-sans antialiased">
-          <Navbar />
-          <main className="min-h-[calc(100vh-var(--navbar-height))] pt-(--navbar-height)">
-            {children}
-          </main>
-          <Scripts />
-          <ReactQueryDevtools buttonPosition="bottom-left" />
+          <ThemeProvider defaultTheme="dark" storageKey="theme">
+            <Navbar />
+            <main className="min-h-[calc(100vh-var(--navbar-height))] pt-(--navbar-height)">
+              {children}
+            </main>
+            <Scripts />
+            <ReactQueryDevtools buttonPosition="bottom-left" />
+          </ThemeProvider>
         </body>
       </html>
     </QueryClientProvider>
