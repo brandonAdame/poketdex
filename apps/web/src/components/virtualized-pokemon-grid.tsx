@@ -100,7 +100,7 @@ export function VirtualizedPokemonGrid() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-4">
+    <div className="p-4">
       <div
         ref={setContainer}
         className="relative w-full"
