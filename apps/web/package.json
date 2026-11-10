@@ -19,13 +19,15 @@
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
     "@tanstack/react-table": "^9.2.5",
+    "@tanstack/react-virtual": "^3.14.25",
     "@tanstack/router-plugin": "latest",
     "@workspace/ui": "workspace:*",
-    "better-auth": "^1.7.4",
+    "dotenv": "^18.0.9",
     "lucide-react": "^1.23.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-error-boundary": "^6.1.6",
+    "react-intersection-observer": "^11.0.1",
     "tailwindcss": "^4"
   },
   "devDependencies": {
@@ -39,7 +41,9 @@
     "@vitejs/plugin-react": "^6",
     "eslint": "^10",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "tsx": "^4.23.15",
     "typescript": "^6",
-    "vite": "^8"
+    "vite": "^8",
+    "vite-env-only": "^3.0.3"
   }
 }

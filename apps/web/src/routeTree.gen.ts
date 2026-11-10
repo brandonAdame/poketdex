@@ -9,18 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as DocumentationRouteImport } from './routes/documentation'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PokemonPokemonIdRouteImport } from './routes/pokemon/$pokemonId'
-import { Route as InstallsOverviewRouteImport } from './routes/installs/overview'
-import { Route as InstallsManualChangeRouteImport } from './routes/installs/manual-change'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as PokemonFormPokemonIdRouteImport } from './routes/pokemon/form/$pokemonId'
 
-const DocumentationRoute = DocumentationRouteImport.update({
-  id: '/documentation',
-  path: '/documentation',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,92 +23,44 @@ const PokemonPokemonIdRoute = PokemonPokemonIdRouteImport.update({
   path: '/pokemon/$pokemonId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InstallsOverviewRoute = InstallsOverviewRouteImport.update({
-  id: '/installs/overview',
-  path: '/installs/overview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InstallsManualChangeRoute = InstallsManualChangeRouteImport.update({
-  id: '/installs/manual-change',
-  path: '/installs/manual-change',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
+const PokemonFormPokemonIdRoute = PokemonFormPokemonIdRouteImport.update({
+  id: '/pokemon/form/$pokemonId',
+  path: '/pokemon/form/$pokemonId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/documentation': typeof DocumentationRoute
-  '/installs/manual-change': typeof InstallsManualChangeRoute
-  '/installs/overview': typeof InstallsOverviewRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/documentation': typeof DocumentationRoute
-  '/installs/manual-change': typeof InstallsManualChangeRoute
-  '/installs/overview': typeof InstallsOverviewRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/documentation': typeof DocumentationRoute
-  '/installs/manual-change': typeof InstallsManualChangeRoute
-  '/installs/overview': typeof InstallsOverviewRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/documentation'
-    | '/installs/manual-change'
-    | '/installs/overview'
-    | '/pokemon/$pokemonId'
-    | '/api/auth/$'
+  fullPaths: '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/documentation'
-    | '/installs/manual-change'
-    | '/installs/overview'
-    | '/pokemon/$pokemonId'
-    | '/api/auth/$'
-  id:
-    | '__root__'
-    | '/'
-    | '/documentation'
-    | '/installs/manual-change'
-    | '/installs/overview'
-    | '/pokemon/$pokemonId'
-    | '/api/auth/$'
+  to: '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
+  id: '__root__' | '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocumentationRoute: typeof DocumentationRoute
-  InstallsManualChangeRoute: typeof InstallsManualChangeRoute
-  InstallsOverviewRoute: typeof InstallsOverviewRoute
   PokemonPokemonIdRoute: typeof PokemonPokemonIdRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  PokemonFormPokemonIdRoute: typeof PokemonFormPokemonIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/documentation': {
-      id: '/documentation'
-      path: '/documentation'
-      fullPath: '/documentation'
-      preLoaderRoute: typeof DocumentationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -131,25 +75,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokemonPokemonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/installs/overview': {
-      id: '/installs/overview'
-      path: '/installs/overview'
-      fullPath: '/installs/overview'
-      preLoaderRoute: typeof InstallsOverviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/installs/manual-change': {
-      id: '/installs/manual-change'
-      path: '/installs/manual-change'
-      fullPath: '/installs/manual-change'
-      preLoaderRoute: typeof InstallsManualChangeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
+    '/pokemon/form/$pokemonId': {
+      id: '/pokemon/form/$pokemonId'
+      path: '/pokemon/form/$pokemonId'
+      fullPath: '/pokemon/form/$pokemonId'
+      preLoaderRoute: typeof PokemonFormPokemonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -157,11 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocumentationRoute: DocumentationRoute,
-  InstallsManualChangeRoute: InstallsManualChangeRoute,
-  InstallsOverviewRoute: InstallsOverviewRoute,
   PokemonPokemonIdRoute: PokemonPokemonIdRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  PokemonFormPokemonIdRoute: PokemonFormPokemonIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

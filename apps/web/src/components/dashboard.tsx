@@ -2,7 +2,12 @@ import type { PokemonResponse, PokemonListResult } from "@/types/types"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 import { Button } from "@workspace/ui/components/button"
-import { Card, CardHeader, CardTitle } from "@workspace/ui/components/card"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card"
 
 export function Dashboard() {
   const { data } = useSuspenseQuery({
@@ -18,24 +23,26 @@ export function Dashboard() {
   })
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="flex w-full flex-wrap gap-3">
       {data.results.map((pokemon: PokemonListResult) => (
-        <Card key={pokemon.name} className="w-sm max-w-full">
+        <Card key={pokemon.name} className="w-64">
           <CardHeader className="flex items-center justify-between">
             <CardTitle>{pokemon.name}</CardTitle>
 
             <Button
               variant="outline"
+              nativeButton={false}
               render={
                 <Link
                   to={"/pokemon/$pokemonId"}
                   params={{ pokemonId: pokemon.name }}
-                />
+                >
+                  View
+                </Link>
               }
-            >
-              View
-            </Button>
+            />
           </CardHeader>
+          <CardContent></CardContent>
         </Card>
       ))}
     </div>

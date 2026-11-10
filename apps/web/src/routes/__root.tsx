@@ -50,7 +50,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <head>
           <HeadContent />
         </head>
-        <body className="body-outline min-h-screen font-sans antialiased">
+        <body className="font-sans antialiased">
           <Navbar />
           <main className="min-h-[calc(100vh-var(--navbar-height))] pt-(--navbar-height)">
             {children}
