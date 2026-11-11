@@ -25,6 +25,7 @@ export default function Navbar() {
         </Link>
 
         <Input
+          type="text"
           className="w-full max-w-xs"
           placeholder="Search Pokémon..."
           value={search.q ?? ""}

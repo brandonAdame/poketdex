@@ -103,11 +103,11 @@ function RouteComponent() {
           >
             <div
               aria-hidden="true"
-              className="absolute -right-10 -bottom-28 -z-10 size-80 rounded-full border-[32px] border-white/30"
+              className="absolute -right-10 -bottom-28 -z-10 size-80 rounded-full border-32 border-white/30"
             />
             <div
               aria-hidden="true"
-              className="absolute right-16 -bottom-12 -z-10 size-36 rounded-full border-[14px] border-white/30"
+              className="absolute right-16 -bottom-12 -z-10 size-36 rounded-full border-14 border-white/30"
             />
             <div className="absolute top-6 left-6 flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-3 py-1.5 text-xs font-semibold tracking-widest text-foreground/65 backdrop-blur sm:top-8 sm:left-8">
               <span
