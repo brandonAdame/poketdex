@@ -28,7 +28,8 @@
     "react-dom": "^19.2.6",
     "react-error-boundary": "^6.1.6",
     "react-intersection-observer": "^11.0.1",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "latest",

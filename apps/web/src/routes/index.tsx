@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { z } from "zod"
 import { Suspense } from "react"
 import { Skeleton } from "@workspace/ui/components/skeleton"
 import { ErrorBoundary } from "react-error-boundary"
 import { VirtualizedPokemonGrid } from "@/components/virtualized-pokemon-grid"
 
+const pokemonSearchSchema = z.object({
+  q: z.string().optional().catch(""),
+})
+
 export const Route = createFileRoute("/")({
   component: App,
+  validateSearch: pokemonSearchSchema,
 })
 
 function App() {
