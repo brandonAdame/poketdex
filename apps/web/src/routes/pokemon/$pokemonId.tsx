@@ -15,6 +15,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@workspace/ui/components/dialog"
+import { pokeClient } from "@/pokedex"
+import { Button, buttonVariants } from "@workspace/ui/components/button"
+import { MovesTable } from "@/components/tables/moves-table"
 
 export const Route = createFileRoute("/pokemon/$pokemonId")({
   component: RouteComponent,
@@ -22,14 +30,9 @@ export const Route = createFileRoute("/pokemon/$pokemonId")({
     return await context.queryClient.query({
       queryKey: ["pokemon", params.pokemonId],
       queryFn: async () => {
-        const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${params.pokemonId}`
-        )
+        const response = await pokeClient.getPokemonByName(params.pokemonId)
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch Pokemon")
-        }
-        return (await response.json()) as Pokemon
+        return response
       },
     })
   },
@@ -214,7 +217,7 @@ function RouteComponent() {
         </section>
 
         <section className="grid gap-5 lg:grid-cols-2">
-          <Card className="border-0 shadow-sm">
+          <Card className="max-h-96 border-0 shadow-sm">
             <CardHeader className="flex flex-row items-start justify-between gap-4">
               <div>
                 <CardTitle className="text-xl">Base stats</CardTitle>
@@ -268,39 +271,21 @@ function RouteComponent() {
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-sm">
+          <Card className="max-h-96 overflow-y-auto border-0 shadow-sm">
             <CardHeader className="flex flex-row items-start justify-between gap-4">
               <div>
                 <CardTitle className="text-xl">Moves</CardTitle>
-                <CardDescription className="mt-1">
-                  A few moves from its learnset.
-                </CardDescription>
               </div>
-              <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                {pokemon.moves.length} total
-              </span>
+              {/* <Link
+                to={`/pokemon/moves/$pokemonId`}
+                params={{ pokemonId: pokemon.id }}
+                className={buttonVariants({ variant: "outline" })}
+              >
+                Show More
+              </Link> */}
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-2">
-                {pokemon.moves.slice(0, 8).map(({ move }, index) => (
-                  <div
-                    key={move.name}
-                    className="flex min-w-0 items-center gap-3 rounded-2xl border bg-background px-3 py-3"
-                  >
-                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-muted font-mono text-xs text-muted-foreground">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="truncate text-sm font-medium capitalize">
-                      {formatName(move.name)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              {pokemon.moves.length > 8 && (
-                <p className="mt-4 text-center text-xs text-muted-foreground">
-                  Showing 8 of {pokemon.moves.length} moves
-                </p>
-              )}
+              <MovesTable moves={pokemon.moves} />
             </CardContent>
           </Card>
         </section>

@@ -24,6 +24,8 @@
     "@workspace/ui": "workspace:*",
     "dotenv": "^18.0.9",
     "lucide-react": "^1.23.0",
+    "pokedex-promise-v2": "^4.2.3",
+    "pokenode-ts": "^5.0.0",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-error-boundary": "^6.1.6",

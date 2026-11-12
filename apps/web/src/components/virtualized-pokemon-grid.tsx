@@ -1,11 +1,5 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-  type CSSProperties,
-} from "react"
-import { usePokemonInfinite } from "../ts-query/hooks/hooks"
+import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react"
+import { usePokemonInfinite, usePokemonNames } from "../ts-query/hooks/hooks"
 import { useWindowVirtualizer } from "@tanstack/react-virtual"
 import { useInView } from "react-intersection-observer"
 import { PokemonGridSkeleton } from "./pokemon-grid-skeleton"
@@ -17,7 +11,7 @@ import {
 import { AlertCircle, Loader2 } from "lucide-react"
 import { Button } from "@workspace/ui/components/button"
 import { PokemonCard } from "./pokemon-card"
-import { Link } from "@tanstack/react-router"
+import { Link, useSearch } from "@tanstack/react-router"
 import { CARD_HEIGHT, GAP, MIN_CARD_WIDTH } from "@/constants"
 
 function useColumns(container: HTMLElement | null) {
@@ -39,18 +33,28 @@ function useColumns(container: HTMLElement | null) {
 }
 
 export function VirtualizedPokemonGrid() {
+  const { q = "" } = useSearch({ from: "/" })
+  const query = q.trim().toLowerCase()
+  const infiniteQuery = usePokemonInfinite()
+  const namesQuery = usePokemonNames()
+  const isSearching = query.length > 0
+
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isFetchNextPageError,
-    status,
     error,
     refetch,
-  } = usePokemonInfinite()
+  } = infiniteQuery
 
-  const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data])
+  const items = isSearching
+    ? (namesQuery.data?.filter((pokemon) => pokemon.name.includes(query)) ?? [])
+    : (data?.pages.flatMap((p) => p.items) ?? [])
+  const status = isSearching ? namesQuery.status : infiniteQuery.status
+  const displayError = isSearching ? namesQuery.error : error
+  const displayRefetch = isSearching ? namesQuery.refetch : refetch
 
   // State-based ref so effects re-run once the list actually mounts
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
@@ -68,7 +72,13 @@ export function VirtualizedPokemonGrid() {
   const { ref: sentinelRef, inView } = useInView({ rootMargin: "600px 0px" })
 
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) {
+    if (
+      !isSearching &&
+      inView &&
+      hasNextPage &&
+      !isFetchingNextPage &&
+      !isFetchNextPageError
+    ) {
       fetchNextPage()
     }
     // Re-runs when a fetch settles, so loading continues if the sentinel is still visible
@@ -78,6 +88,7 @@ export function VirtualizedPokemonGrid() {
     isFetchingNextPage,
     isFetchNextPageError,
     fetchNextPage,
+    isSearching,
   ])
 
   if (status === "pending") return <PokemonGridSkeleton />
@@ -89,8 +100,14 @@ export function VirtualizedPokemonGrid() {
           <AlertCircle className="size-4" />
           <AlertTitle>Couldn't load Pokémon</AlertTitle>
           <AlertDescription className="flex items-center justify-between gap-4">
-            {error.message}
-            <Button size="sm" variant="outline" onClick={() => refetch()}>
+            {displayError instanceof Error
+              ? displayError.message
+              : "Unable to load Pokémon."}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => void displayRefetch()}
+            >
               Retry
             </Button>
           </AlertDescription>
@@ -151,8 +168,10 @@ export function VirtualizedPokemonGrid() {
           >
             Failed to load more. Retry
           </Button>
-        ) : !hasNextPage ? (
+        ) : !isSearching && !hasNextPage ? (
           "That's all of them!"
+        ) : isSearching && items.length === 0 ? (
+          "No Pokémon found."
         ) : null}
       </div>
     </div>

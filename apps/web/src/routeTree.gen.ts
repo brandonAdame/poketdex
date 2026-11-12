@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PokemonPokemonIdRouteImport } from './routes/pokemon/$pokemonId'
+import { Route as PokemonMoveMoveIdRouteImport } from './routes/pokemon/move/$moveId'
 import { Route as PokemonFormPokemonIdRouteImport } from './routes/pokemon/form/$pokemonId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const PokemonPokemonIdRoute = PokemonPokemonIdRouteImport.update({
   path: '/pokemon/$pokemonId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PokemonMoveMoveIdRoute = PokemonMoveMoveIdRouteImport.update({
+  id: '/pokemon/move/$moveId',
+  path: '/pokemon/move/$moveId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PokemonFormPokemonIdRoute = PokemonFormPokemonIdRouteImport.update({
   id: '/pokemon/form/$pokemonId',
   path: '/pokemon/form/$pokemonId',
@@ -33,30 +39,47 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
   '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
+  '/pokemon/move/$moveId': typeof PokemonMoveMoveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
   '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
+  '/pokemon/move/$moveId': typeof PokemonMoveMoveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/pokemon/$pokemonId': typeof PokemonPokemonIdRoute
   '/pokemon/form/$pokemonId': typeof PokemonFormPokemonIdRoute
+  '/pokemon/move/$moveId': typeof PokemonMoveMoveIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
+  fullPaths:
+    | '/'
+    | '/pokemon/$pokemonId'
+    | '/pokemon/form/$pokemonId'
+    | '/pokemon/move/$moveId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
-  id: '__root__' | '/' | '/pokemon/$pokemonId' | '/pokemon/form/$pokemonId'
+  to:
+    | '/'
+    | '/pokemon/$pokemonId'
+    | '/pokemon/form/$pokemonId'
+    | '/pokemon/move/$moveId'
+  id:
+    | '__root__'
+    | '/'
+    | '/pokemon/$pokemonId'
+    | '/pokemon/form/$pokemonId'
+    | '/pokemon/move/$moveId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PokemonPokemonIdRoute: typeof PokemonPokemonIdRoute
   PokemonFormPokemonIdRoute: typeof PokemonFormPokemonIdRoute
+  PokemonMoveMoveIdRoute: typeof PokemonMoveMoveIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokemonPokemonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pokemon/move/$moveId': {
+      id: '/pokemon/move/$moveId'
+      path: '/pokemon/move/$moveId'
+      fullPath: '/pokemon/move/$moveId'
+      preLoaderRoute: typeof PokemonMoveMoveIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pokemon/form/$pokemonId': {
       id: '/pokemon/form/$pokemonId'
       path: '/pokemon/form/$pokemonId'
@@ -89,6 +119,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PokemonPokemonIdRoute: PokemonPokemonIdRoute,
   PokemonFormPokemonIdRoute: PokemonFormPokemonIdRoute,
+  PokemonMoveMoveIdRoute: PokemonMoveMoveIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
